@@ -307,14 +307,18 @@ public class AccessRuleMaster extends Applet implements Application {
         checkTLV(buf, ofs, (byte) 0xF0, (short) (8 + AccessRuleMaster.SIZE_AID + AccessRuleMaster.SIZE_HASH + AccessRuleMaster.SIZE_RULE));
         checkTLV(buf, (short) (ofs + 2), (byte) 0xE2, (short) (6 + AccessRuleMaster.SIZE_AID + AccessRuleMaster.SIZE_HASH + AccessRuleMaster.SIZE_RULE));
         checkTLV(buf, (short) (ofs + 4), (byte) 0xE1, (short) (4 + AccessRuleMaster.SIZE_AID + AccessRuleMaster.SIZE_HASH));
-        short ofsAidRefDo = (short) (ofs + 6);
-        short ofsHashRefDo = checkTLV(buf, (short) (ofs + 6), (byte) 0x4F, (AccessRuleMaster.SIZE_AID));
+//        short ofsAidRefDo = (short) (ofs + 6);
+//        short ofsHashRefDo = checkTLV(buf, ofsAidRefDo, (byte) 0x4F, (AccessRuleMaster.SIZE_AID));
+//        short ofsArDo = checkTLV(buf, ofsHashRefDo, (byte) 0xC1, (AccessRuleMaster.SIZE_HASH));
+//        checkTLV(buf, ofsArDo, (byte) 0xE3, (AccessRuleMaster.SIZE_RULE));
+
+        short ofsHashRefDo = (short) (ofs + 6);
         short ofsArDo = checkTLV(buf, ofsHashRefDo, (byte) 0xC1, (AccessRuleMaster.SIZE_HASH));
         checkTLV(buf, ofsArDo, (byte) 0xE3, (AccessRuleMaster.SIZE_RULE));
 
         JCSystem.beginTransaction();
         RuleEntry pe = RuleEntry.getInstance();
-        pe.setAid(buf, (short) (ofsAidRefDo + 2), buf[(short) (ofsAidRefDo + 1)]);
+        //pe.setAid(buf, (short) (ofsAidRefDo + 2), buf[(short) (ofsAidRefDo + 1)]);
         pe.setHash(buf, (short) (ofsHashRefDo + 2), buf[(short) (ofsHashRefDo + 1)]);
         pe.setRule(buf, (short) (ofsArDo + 2), buf[(short) (ofsArDo + 1)]);
         JCSystem.commitTransaction();

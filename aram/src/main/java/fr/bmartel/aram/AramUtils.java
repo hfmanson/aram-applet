@@ -69,12 +69,15 @@ public class AramUtils {
             buf[(short) (ofs - dataOffset)] = (byte) 0xE1;
         }
         ofs++;
-        byte aidRefDoLen = buildAidRefDo(dataOffset, dataOffsetMax, buf, (short) (ofs + 1), entry);
-        byte hashRefDoLen = buildHashRefDo(dataOffset, dataOffsetMax, buf, (short) (ofs + aidRefDoLen + 1), entry);
+        //byte aidRefDoLen = buildAidRefDo(dataOffset, dataOffsetMax, buf, (short) (ofs + 1), entry);
+        //byte hashRefDoLen = buildHashRefDo(dataOffset, dataOffsetMax, buf, (short) (ofs + aidRefDoLen + 1), entry);
+        byte hashRefDoLen = buildHashRefDo(dataOffset, dataOffsetMax, buf, (short) (ofs + 1), entry);
         if (ofs >= dataOffset && ofs < dataOffsetMax) {
-            buf[(short) (ofs - dataOffset)] = (byte) (aidRefDoLen + hashRefDoLen);
+//            buf[(short) (ofs - dataOffset)] = (byte) (aidRefDoLen + hashRefDoLen);
+            buf[(short) (ofs - dataOffset)] = (byte) (hashRefDoLen);
         }
-        return (byte) (aidRefDoLen + hashRefDoLen + 2);
+//        return (byte) (aidRefDoLen + hashRefDoLen + 2);
+        return (byte) (hashRefDoLen + 2);
     }
 
     /**
